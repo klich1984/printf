@@ -21,6 +21,7 @@ int contadordigit(int number)
 {
 	int count = 0;
 	int number2 = number;
+
 	if (number <= 0)
 		count += 1;
 
