@@ -38,9 +38,9 @@ int _printf(char *format, ...)
 			break;
 		}
 		format += 2;
-		}	
+		}
 		else
-		{		
+		{
 			written += _putchar(format[0]);
 			format++;
 		}
