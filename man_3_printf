@@ -1,0 +1,317 @@
+.\" his manual is created for Holbertonn's printf
+.\" project which consists of developing a function
+.\" similar to the printf function of the <stdio.h> library
+.\" with some of its features
+.TH _printf 3 2020-10-27 -  " GNU" "Manual of _printf"
+.SH NAME
+_printf \ - formatted output conversion
+.SH SYNOPSIS
+.B #include "holberton.h"
+.sp
+.BI "#include <stdarg.h>"
+.br
+.BI "#include <stddef.h>"
+.br
+.BI "#include <stdlib.h>"
+.br
+.BI "typedef struct structprint"
+.br
+.BI "int _putchar(char ch);"
+.br
+.BI "int _puts(char *string);"
+.br
+.BI "int printc(char *format, va_list);"
+.br
+.BI "int printstr(char *format, va_list);"
+.br
+.BI "int (*driver(char *format))(char *format, va_list);"
+.br
+.BI "int _printf(char *format, ...);"
+.br
+.BI "int printint(char *format, va_list pa);"
+.br
+.BI "int integer(int number);"
+.br
+.BI "int contadordigit(int number);"
+.br
+.BI "int _abs(int number);"
+.br
+.BI "int printpercent(char *format, va_list pa);"
+.br
+.BI "int printhex(char *format, va_list);"
+.br
+.BI "int printHEX(char *format, va_list);"
+.br
+.BI "int printocta(char *format, va_list);"
+.br
+.BI "int print_unsign(char *format, va_list);"
+.SH DESCRIPTION
+Descripción detallada de las ordenes y sus opciones.
+en el caso de una función se deben describir los parámetros de la interfaz
+Los parámetros se introducen con la opción .PP
+
+.SH FILES
+The function
+.BR _printf ()
+produce output according to a format the input the standard output. these function
+write the output under the control of the one format string of characters
+
+.SS Return value
+Upon successful return, this function return the number of characters
+printed (excluding the null byte used to end output to strings).
+
+If an output error is encountered, a negative value is returned.
+.SS Format of the format string
+The format string is a character string, beginning and ending in its initial shift state, if any.  The format  string  is  composed  of
+zero  or  more directives: ordinary characters (not %), which are copied unchanged to the output stream; an optional minimum fieldwidth,
+an optional precision and an optional length modifier.
+.SS The flag characters
+The character % is followed by zero or more of the following flags:
+.TP
+.B #
+The value should be converted to an "alternate form".
+For
+.B o
+conversions, the first character of the output string is made zero
+(by prefixing a 0 if it was not zero already).
+For
+.B x
+and
+.B X
+conversions, a nonzero result has the string "0x" (or "0X" for
+.B X
+conversions) prepended to it.
+For
+.BR a ,
+.BR A ,
+.BR e ,
+.BR E ,
+.BR f ,
+.BR F ,
+.BR g ,
+and
+.B G
+conversions, the result will always contain a decimal point, even if no
+digits follow it (normally, a decimal point appears in the results of those
+conversions only if a digit follows).
+For
+.B g
+and
+.B G
+conversions, trailing zeros are not removed from the result as they would
+otherwise be.
+For other conversions, the result is undefined.
+.TP
+.B \&0
+The value should be zero padded.
+For
+.BR d ,
+.BR i ,
+.BR o ,
+.BR u ,
+.BR x ,
+.BR X ,
+.BR a ,
+.BR A ,
+.BR e ,
+.BR E ,
+.BR f ,
+.BR F ,
+.BR g ,
+and
+.B G
+conversions, the converted value is padded on the left with zeros rather
+than blanks.
+If the
+.B \&0
+and
+.B \-
+flags both appear, the
+.B \&0
+flag is ignored.
+If a precision is given with a numeric conversion
+.RB ( d ,
+.BR i ,
+.BR o ,
+.BR u ,
+.BR x ,
+and
+.BR X ),
+the
+.B \&0
+flag is ignored.
+For other conversions, the behavior is undefined.
+.TP
+.B \-
+The converted value is to be left adjusted on the field boundary.
+(The default is right justification.)
+Except for
+.B n
+conversions, the converted value is padded on the right with blanks, rather
+than on the left with blanks or zeros.
+A
+.B \-
+overrides a
+.B \&0
+if both are given.
+.TP
+.B \(aq \(aq
+(a space) A blank should be left before a positive number
+(or empty string) produced by a signed conversion.
+.TP
+.B +
+A sign (+ or \-) should always be placed before a number produced by a signed
+conversion.
+By default a sign is used only for negative numbers.
+A
+.B +
+overrides a space if both are used.
+.PP
+.SS The length modifier
+Here, "integer conversion" stands for
+.BR d ,
+.BR i ,
+.BR o ,
+.BR u ,
+.BR x ,
+or
+.B X
+conversion.
+.B h
+A following integer conversion corresponds to a
+.I short int
+or
+.I unsigned short int
+argument, or a following
+.B n
+conversion corresponds to a pointer to a
+.I short int
+argument.
+.TP
+.B l
+(ell) A following integer conversion corresponds to a
+.I long int
+or
+.I unsigned long int
+argument, or a following
+.B n
+conversion corresponds to a pointer to a
+.I long int
+argument, or a following
+.B c
+conversion corresponds to a
+.I wint_t
+argument, or a following
+.B s
+conversion corresponds to a pointer to
+.I wchar_t
+argument.
+.SS The conversion specifier
+A character that specifies the type of conversion to be applied.
+The conversion specifiers and their meanings are:
+.TP
+.BR d ", " i
+The
+.I int
+argument is converted to signed decimal notation.
+The precision, if any, gives the minimum number of digits
+that must appear; if the converted value requires fewer digits, it is
+padded on the left with zeros.
+The default precision is 1.
+When 0 is printed with an explicit precision 0, the output is empty.
+.TP
+.BR o ", " u ", " x ", " X
+The
+.I "unsigned int"
+argument is converted to unsigned octal
+.RB ( o ),
+unsigned decimal
+.RB ( u ),
+or unsigned hexadecimal
+.RB ( x
+and
+.BR X )
+notation.
+The letters
+.B abcdef
+are used for
+.B x
+conversions; the letters
+.B ABCDEF
+are used for
+.B X
+conversions.
+The precision, if any, gives the minimum number of digits
+that must appear; if the converted value requires fewer digits, it is
+padded on the left with zeros.
+The default precision is 1.
+When 0 is printed with an explicit precision 0, the output is empty.
+.TP
+.B c
+If no
+.B l
+modifier is present, the
+.I int
+argument is converted to an
+.IR "unsigned char" ,
+and the resulting character is written.
+If an
+.B l
+modifier is present, the
+.I wint_t
+(wide character) argument is converted to a multibyte sequence by a call
+to the
+.BR wcrtomb (3)
+function, with a conversion state starting in the initial state, and the
+resulting multibyte string is written.
+.TP
+.B s
+If no
+.B l
+modifier is present: The
+.I "const char\ *"
+argument is expected to be a pointer to an array of character type (pointer
+to a string).
+Characters from the array are written up to (but not
+including) a terminating null byte (\(aq\\0\(aq);
+if a precision is specified, no more than the number specified
+are written.
+If a precision is given, no null byte need be present;
+if the precision is not specified, or is greater than the size of the
+array, the array must contain a terminating null byte.
+
+If an
+.B l
+modifier is present: The
+.I "const wchar_t\ *"
+argument is expected to be a pointer to an array of wide characters.
+Wide characters from the array are converted to multibyte characters
+(each by a call to the
+.BR wcrtomb (3)
+function, with a conversion state starting in the initial state before
+the first wide character), up to and including a terminating null
+wide character.
+The resulting multibyte characters are written up to
+(but not including) the terminating null byte.
+If a precision is
+specified, no more bytes than the number specified are written, but
+no partial multibyte characters are written.
+Note that the precision
+determines the number of
+.I bytes
+written, not the number of
+.I wide characters
+or
+.IR "screen positions" .
+The array must contain a terminating null wide character, unless a
+precision is given and it is so small that the number of bytes written
+exceeds it before the end of the array is reached.
+.SH SEE ALSO
+.BR printf (3)
+.SH BUGS
+Detalles sorprendentes (no siempre tienen que ser problemas)
+.SH AUTHOR
+by written Carlos Alberto Usuga Martinez in collaboration with Leopoldo Luna
+If there is a debug in the print whit
+.BR _printf(), please contact
+leopoldo.luna@holbertonschool.com or carlos-alberto.usuga-martinez@holbertonschool.com
